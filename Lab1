@@ -1,0 +1,59 @@
+/*Towers of Hanoi*/
+
+#include<stdio.h>
+void TowerOfHanoi(int n, char src, char dest, char aux)
+{
+     if(n==1)
+     {
+        printf("Move disk-%d from %c to %c\n",n,src,dest);
+     }
+     else
+     {
+          TowerOfHanoi(n-1,src,aux,dest);
+          printf("Move disk-%d from %c to %c\n",n,src,dest);
+          TowerOfHanoi(n-1,aux,dest,src);
+     }
+}
+ 
+void main()
+{
+        int n;
+        printf("Enter the number of disks\n");
+        scanf("%d", &n);
+ 
+        TowerOfHanoi(n, 'A', 'C', 'B');
+}
+
+
+/*GCD of a number*/
+
+#include<stdio.h>
+#include<time.h>
+int hcf(int n1,int n2);
+void delay()
+{
+    int u;
+    for(u=8000;u>0;u--);
+}
+int main()
+{
+    int n1,n2;
+    time_t start,end;
+    printf("Enter two positive integers:\n");
+    scanf("%d %d",&n1,&n2);
+    start=time(NULL);
+    printf("G.C.D of %d and %d is %d",n1,n2,gcd(n1,n2));
+    delay();
+    end=time(NULL);
+    printf("\nTime taken: %f",difftime(end,start));
+    return 0;
+}
+int gcd(int n1,int n2)
+{
+    if(n2!=0)
+    {
+        return gcd(n2,n1%n2);
+    }
+    else
+        return n1;
+}
