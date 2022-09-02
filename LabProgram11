@@ -1,0 +1,58 @@
+/* Warshall's Algorithm */
+
+#include<stdio.h>
+#define nodes 4
+void floyds(int p[nodes+1][nodes+1])
+{
+    for(int k=1;k<=nodes;k++)
+    {
+        for(int i=1;i<=nodes;i++)
+        {
+            for(int j=0;j<=nodes;j++)
+            {
+                    p[i][j]=(p[i][j] || (p[i][k]&&p[k][j]));
+            }
+        }
+    }
+}
+
+int max(int a,int b)
+{
+    if(a > b)
+        return a;
+    else
+        return b;
+}
+
+void main()
+{
+    int e,u,v,w,p[nodes+1][nodes+1];
+    printf("\nEnter the number of edges\n");
+    scanf("%d",&e);
+    for(int i=1;i<=nodes;i++)
+        for(int j=1;j<=nodes;j++)
+            p[i][j] = 0;
+    printf("\nEnter the edges and its weight :\n");
+     for(int i=1;i<=e;i++)
+     {
+         scanf("%d%d",&u,&v);
+         p[u][v]=1;
+     }
+     floyds(p);
+     printf("Transitive Closure\n");
+      for(int i=1;i<=nodes;i++)
+      {
+        for(int j=1;j<=nodes;j++)
+            printf("%d ",p[i][j]);
+        printf("\n");
+      }
+      printf("The shortest path between nodes\n");
+      for(int i=1;i<=nodes;i++)
+      {
+        for(int j=1;j<=nodes;j++)
+            {
+                if(i!=j)
+                    printf("Shortest path from %d to %d is %d\n",i,j,p[i][j]);
+            }
+      }
+}
