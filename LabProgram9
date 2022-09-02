@@ -1,0 +1,56 @@
+/* Quick Sort */
+
+#include<stdio.h>
+#include<time.h>
+void quickSort(int number[],int first,int last){
+   int i, j, pivot, temp;
+   delay();
+   if(first<last){
+      pivot=first;
+      i=first;
+      j=last;
+      while(i<j){
+         while(number[i]<=number[pivot]&&i<last)
+         i++;
+         while(number[j]>number[pivot])
+         j--;
+         if(i<j){
+            temp=number[i];
+            number[i]=number[j];
+            number[j]=temp;
+         }
+      }
+      temp=number[pivot];
+      number[pivot]=number[j];
+      number[j]=temp;
+      quickSort(number,first,j-1);
+      quickSort(number,j+1,last);
+   }
+}
+void delay()
+{
+    int temp ;
+    for(int i=0 ;i<50000;i++)
+        temp=46/4748;
+}
+void main()
+{
+    int n;
+    clock_t start,end;
+    printf("Enter the number of elements\n");
+    scanf("%d",&n);
+    int nums[n];
+    for(int i=0;i<n;i++)
+        nums[i]=rand();
+   printf("******ARRAY BEFORE SORTING******\n");
+    for(int i=0;i<n;i++)
+        printf("%d ",nums[i]);
+    printf("\n\n");
+    start=clock();
+    quickSort(nums,0,n-1);
+    end=clock();
+    printf("******ARRAY AFTER SORTING******\n");
+    for(int i=0;i<n;i++)
+        printf("%d ",nums[i]);
+    printf("\n\nTime taken to sort:%lf\n",(double)(end-start)/CLOCKS_PER_SEC);
+}
