@@ -1,0 +1,42 @@
+/*Selection Sort*/
+
+#include<stdio.h>
+#include<time.h>
+void selSort(int a[],int n)
+{
+    int s,temp,k,m;
+    for(int i=0;i < n-1 ;i++)
+    {
+        s = a[i];
+        for(k = i+1 ;k < n;k++)
+        {
+            if(a[k] < s)
+            {
+                s = a[k];
+                m = k;
+            }
+        }
+        temp = s;
+        a[m] = a[i];
+        a[i] = temp;
+    }
+}
+
+void main()
+{
+    int n;
+    clock_t start,end;
+    printf("Enter the size of the array\n");
+    scanf("%d",&n);
+    int nums[n];
+    for(int i=0;i<n;i++)
+        nums[i]=rand();
+    start = clock();
+    selSort(nums,n);
+    end = clock();
+    for(int i=0;i<n;i++)
+    {
+        printf("%d\n",nums[i]);
+    }
+    printf("\nTime taken to sort: %f\n",(double)(end-start)/CLOCKS_PER_SEC);
+}
