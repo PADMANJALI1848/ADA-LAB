@@ -1,0 +1,37 @@
+/*Insertion Sort*/
+
+#include<stdio.h>
+#include<time.h>
+void insertionSort(int a[],int n)
+{
+    int j,key;
+    for(int i=1;i<=n-1;i++)
+    {
+        key = a[i];
+        for(j=i-1;j>=0;j--)
+        {
+            if(a[j] > key)
+            {
+                a[j+1] = a[j];
+            }
+            else
+                break;
+        }
+        a[j+1] = key;
+    }
+}
+
+void main()
+{
+    int n;
+    clock_t start,end;
+    printf("Enter the size of the array\n");
+    scanf("%d",&n);
+    int nums[n];
+    for(int i=0;i<n;i++)
+        nums[i]=rand();
+    start = clock();
+    insertionSort(nums,n);
+    end = clock();
+    printf("\nTime taken to sort : %f\n",(double)(end-start)/CLOCKS_PER_SEC);
+}
