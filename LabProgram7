@@ -1,0 +1,103 @@
+/* Johnson Trotter */
+
+#include<stdio.h>
+int RIGHT_TO_LEFT = 0;
+int LEFT_TO_RIGHT = 1;
+int factorial(int n)
+{
+    int res=1;
+    for(int i=1;i<=n;i++)
+        res *= i;
+
+    return res;
+}
+
+int getPosMobile(int a[],int n,int mobile)
+{
+    for(int i=0;i<n;i++)
+    {
+        if(a[i]==mobile)
+            return i;
+    }
+}
+
+int getMobile(int a[],int dir[],int n)
+{
+    int mobile=0,mobile_prev=0;
+    for(int i=0;i<n;i++)
+    {
+        if(dir[a[i]-1] == RIGHT_TO_LEFT && i!=0)
+        {
+            if(a[i] > a[i-1] && a[i] > mobile_prev)
+            {
+                mobile=a[i];
+                mobile_prev=mobile;
+            }
+        }
+        if(dir[a[i]-1] == LEFT_TO_RIGHT && i!=n-1)
+        {
+            if(a[i] > a[i+1] && a[i] > mobile_prev)
+            {
+                mobile=a[i];
+                mobile_prev=mobile;
+            }
+        }
+    }
+    if(mobile==0 && mobile_prev==0)
+        return 0;
+    else
+        return mobile;
+}
+
+void printAllPermutations(int a[],int dir[],int n)
+{
+    int mobile=getMobile(a,dir,n);
+    int pos = getPosMobile(a,n,mobile);
+    if( dir[a[pos]-1] == RIGHT_TO_LEFT)
+        swap(&a[pos],&a[pos-1]);
+    if(dir[a[pos]-1] == LEFT_TO_RIGHT)
+        swap(&a[pos],&a[pos+1]);
+
+    for(int i=0;i<n;i++)
+    {
+        if(a[i]>mobile)
+        {
+            if(dir[a[i]-1]==0)
+                dir[a[i]-1]=1;
+            else
+                dir[a[i]-1]=0;
+        }
+    }
+
+    for(int i=0;i<n;i++)
+        printf("%d",a[i]);
+
+    printf("\n");
+}
+
+void swap(int *m,int *n)
+{
+    int temp;
+    temp=*m;
+    *m=*n;
+    *n=temp;
+}
+
+void main()
+{
+    int n;
+    printf("Enter the length of the sequence\n");
+    scanf("%d",&n);
+    printf("The number of possible permutations of the sequence is %d\n",factorial(n));
+    printf("Permutations :\n");
+    int num[n],dir[n];
+    for(int i=0;i<n;i++)
+    {
+        num[i]=i+1;
+        dir[i]=RIGHT_TO_LEFT;
+        printf("%d",num[i]);
+    }
+    printf("\n");
+    for(int i=1;i<factorial(n);i++)
+        printAllPermutations(num,dir,n);
+}
